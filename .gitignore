@@ -1,0 +1,26 @@
+# Virtual Environment
+.venv/
+env/
+venv/
+ENV/
+
+# Python cache & compiled files
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.pytest_cache/
+
+# Large raw datasets (exceeds recommended GitHub file size limit; generated/downloaded via data_loader.py)
+data/raw/DataCoSupplyChainDataset.csv
+*.csv.gz
+
+# IDE & OS files
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
+*.swp
+
+# Local logs
+*.log

@@ -1,0 +1,687 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BCG X | Supply Chain Risk & Predictive Maintenance Twin</title>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@500;600;700;800&display=swap" rel="stylesheet">
+    <!-- Plotly CDN for dynamic interactive charting -->
+    <script src="https://cdn.plot.ly/plotly-2.30.0.min.js"></script>
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+    <div class="app-layout">
+        <!-- Sidebar Navigation -->
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <div class="logo-mark">
+                    <span class="logo-icon">🏭</span>
+                    <div>
+                        <div class="brand-title">BCG X</div>
+                        <div class="brand-subtitle">Digital Twin Platform</div>
+                    </div>
+                </div>
+            </div>
+
+            <nav class="nav-menu">
+                <button class="nav-item active" data-tab="tab-overview">
+                    <span class="nav-icon">💎</span>
+                    <span class="nav-label">Executive Value & ROI</span>
+                </button>
+                <button class="nav-item" data-tab="tab-maintenance">
+                    <span class="nav-icon">⚙️</span>
+                    <span class="nav-label">Predictive Maintenance & XAI</span>
+                </button>
+                <button class="nav-item" data-tab="tab-supply-chain">
+                    <span class="nav-icon">🚚</span>
+                    <span class="nav-label">Supply Chain Logistics</span>
+                </button>
+                <button class="nav-item" data-tab="tab-inventory">
+                    <span class="nav-icon">📦</span>
+                    <span class="nav-label">Inventory Trajectories</span>
+                </button>
+                <button class="nav-item" data-tab="tab-prescriptive">
+                    <span class="nav-icon">🎯</span>
+                    <span class="nav-label">Prescriptive Optimizer</span>
+                </button>
+                <button class="nav-item" data-tab="tab-resilience">
+                    <span class="nav-icon">🛡️</span>
+                    <span class="nav-label">Resilience Matrix (TTS/TTR)</span>
+                </button>
+                <button class="nav-item" data-tab="tab-simulator">
+                    <span class="nav-icon">🔮</span>
+                    <span class="nav-label">What-If Disruption Simulator</span>
+                </button>
+                <button class="nav-item" data-tab="tab-memo">
+                    <span class="nav-icon">📄</span>
+                    <span class="nav-label">Boardroom Executive Memo</span>
+                </button>
+            </nav>
+
+            <div class="sidebar-footer">
+                <div class="status-indicator">
+                    <span class="status-pulse"></span>
+                    <span>Digital Twin Live</span>
+                </div>
+                <div class="facility-meta" id="facility-meta-text">
+                    Facility: Line 4 (15 Assets)
+                </div>
+            </div>
+        </aside>
+
+        <!-- Main Content Area -->
+        <main class="main-content">
+            <!-- Top Navbar -->
+            <header class="top-nav">
+                <div class="header-left">
+                    <h1 class="page-title" id="page-title">Executive Value & ROI Cockpit</h1>
+                    <p class="page-desc" id="page-desc">Real-time telemetry, inbound logistics exposure, and quantified EBITDA impact.</p>
+                </div>
+                <div class="header-right">
+                    <div class="health-chip">
+                        <span class="health-chip-label">Plant Health:</span>
+                        <span class="health-chip-value" id="top-health-val">--%</span>
+                    </div>
+                    <button class="btn btn-outline" id="btn-refresh">
+                        <span>↻ Refresh State</span>
+                    </button>
+                </div>
+            </header>
+
+            <div class="content-scrollable">
+
+                <!-- 1. TAB: EXECUTIVE OVERVIEW -->
+                <section class="tab-pane active" id="tab-overview">
+                    <!-- KPI Row -->
+                    <div class="kpi-grid">
+                        <div class="kpi-card">
+                            <div class="kpi-title">Overall Facility Health</div>
+                            <div class="kpi-value text-emerald" id="kpi-health">--%</div>
+                            <div class="kpi-sub">Composite multi-domain score</div>
+                        </div>
+                        <div class="kpi-card">
+                            <div class="kpi-title">Value-at-Risk (VaR)</div>
+                            <div class="kpi-value text-rose" id="kpi-var">$0</div>
+                            <div class="kpi-sub">Reactive breakdown exposure</div>
+                        </div>
+                        <div class="kpi-card">
+                            <div class="kpi-title">Annualized EBITDA Impact</div>
+                            <div class="kpi-value text-emerald" id="kpi-ebitda">$0</div>
+                            <div class="kpi-sub">Prescriptive optimization gain</div>
+                        </div>
+                        <div class="kpi-card">
+                            <div class="kpi-title">Prescriptive ROI Multiplier</div>
+                            <div class="kpi-value text-cyan" id="kpi-roi">0.0x</div>
+                            <div class="kpi-sub" id="kpi-payback">Payback: -- weeks</div>
+                        </div>
+                        <div class="kpi-card">
+                            <div class="kpi-title">Resilience Score</div>
+                            <div class="kpi-value text-amber" id="kpi-resilience">-- / 100</div>
+                            <div class="kpi-sub" id="kpi-vuln-nodes">-- vulnerable nodes</div>
+                        </div>
+                    </div>
+
+                    <!-- Main Executive Charts -->
+                    <div class="card-section mt-4">
+                        <div class="section-header">
+                            <div>
+                                <h3 class="card-title">Financial Value-at-Risk Arbitrage: Reactive vs Prescriptive Operations</h3>
+                                <p class="card-caption">Quantifying catastrophic downtime loss & emergency spot-freight vs low-cost planned maintenance and safety buffers.</p>
+                            </div>
+                        </div>
+                        <div id="chart-roi-arbitrage" class="chart-container-large"></div>
+                    </div>
+
+                    <div class="grid-2 mt-4">
+                        <div class="card-section">
+                            <h3 class="card-title">Machine Failure Probability Ranking</h3>
+                            <p class="card-caption">Ranked by Random Forest failure probability with physical feature engineering.</p>
+                            <div id="chart-machine-ranking" class="chart-container"></div>
+                        </div>
+
+                        <div class="card-section">
+                            <h3 class="card-title">Domain Health & Priority Alerts</h3>
+                            <div class="domain-bars">
+                                <div class="domain-row">
+                                    <div class="domain-info">
+                                        <span>Machinery & Telemetry Health</span>
+                                        <b id="domain-equip-pct">--%</b>
+                                    </div>
+                                    <div class="progress-track"><div class="progress-fill fill-emerald" id="bar-equip" style="width:0%"></div></div>
+                                </div>
+                                <div class="domain-row mt-3">
+                                    <div class="domain-info">
+                                        <span>Inbound Logistics Reliability</span>
+                                        <b id="domain-sc-pct">--%</b>
+                                    </div>
+                                    <div class="progress-track"><div class="progress-fill fill-cyan" id="bar-sc" style="width:0%"></div></div>
+                                </div>
+                                <div class="domain-row mt-3">
+                                    <div class="domain-info">
+                                        <span>Inventory Buffer Coverage</span>
+                                        <b id="domain-inv-pct">--%</b>
+                                    </div>
+                                    <div class="progress-track"><div class="progress-fill fill-amber" id="bar-inv" style="width:0%"></div></div>
+                                </div>
+                            </div>
+
+                            <h4 class="mt-4 mb-2 text-rose">Immediate Operational Hotspots</h4>
+                            <div id="hotspot-list" class="hotspot-container"></div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- 2. TAB: PREDICTIVE MAINTENANCE & XAI -->
+                <section class="tab-pane" id="tab-maintenance">
+                    <div class="filter-bar">
+                        <label for="machine-selector" class="filter-label">Select Machine Asset:</label>
+                        <select id="machine-selector" class="form-select"></select>
+                    </div>
+
+                    <!-- Telemetry Metrics Grid -->
+                    <div class="telemetry-grid mt-3">
+                        <div class="tele-card">
+                            <div class="tele-label">Spindle Rotational Speed</div>
+                            <div class="tele-val" id="tele-rpm">-- rpm</div>
+                        </div>
+                        <div class="tele-card">
+                            <div class="tele-label">Torque</div>
+                            <div class="tele-val" id="tele-torque">-- Nm</div>
+                        </div>
+                        <div class="tele-card">
+                            <div class="tele-label">Tool Wear Duration</div>
+                            <div class="tele-val" id="tele-wear">-- min</div>
+                        </div>
+                        <div class="tele-card">
+                            <div class="tele-label">Mechanical Power</div>
+                            <div class="tele-val" id="tele-power">-- kW</div>
+                        </div>
+                        <div class="tele-card">
+                            <div class="tele-label">Process Temp</div>
+                            <div class="tele-val" id="tele-ptemp">-- K</div>
+                        </div>
+                        <div class="tele-card">
+                            <div class="tele-label">Air Temp</div>
+                            <div class="tele-val" id="tele-atemp">-- K</div>
+                        </div>
+                        <div class="tele-card">
+                            <div class="tele-label">Temp Difference (ΔT)</div>
+                            <div class="tele-val" id="tele-dtemp">-- K</div>
+                        </div>
+                        <div class="tele-card">
+                            <div class="tele-label">Overstrain Metric</div>
+                            <div class="tele-val" id="tele-overstrain">--</div>
+                        </div>
+                    </div>
+
+                    <!-- Explainable AI (XAI) Waterfall -->
+                    <div class="card-section mt-4">
+                        <div class="section-header">
+                            <div>
+                                <h3 class="card-title">🔬 Explainable AI (XAI): Root-Cause Telemetry Attribution</h3>
+                                <p class="card-caption" id="xai-machine-caption">Decomposing machine failure probability into physics-based deviations.</p>
+                            </div>
+                            <div id="machine-status-badge" class="badge">HEALTHY</div>
+                        </div>
+                        <div id="chart-machine-xai" class="chart-container-large"></div>
+                    </div>
+
+                    <div class="grid-2 mt-4">
+                        <div class="card-section">
+                            <h3 class="card-title">Asset Diagnostics & Suspected Failure Modes</h3>
+                            <div class="diagnostic-box" id="diagnostic-details"></div>
+                        </div>
+                        <div class="card-section">
+                            <h3 class="card-title">Global Model Risk Drivers (AI4I 2020 Real Dataset)</h3>
+                            <div id="chart-global-features" class="chart-container"></div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- 3. TAB: SUPPLY CHAIN LOGISTICS -->
+                <section class="tab-pane" id="tab-supply-chain">
+                    <div class="card-section">
+                        <h3 class="card-title">Active Inbound Shipments & Lead-Time Monitoring</h3>
+                        <p class="card-caption">Tracking carrier modes, predicted delay days, weather disruption indices, and risk tiers.</p>
+                        <div class="table-responsive mt-3">
+                            <table class="data-table" id="table-shipments">
+                                <thead>
+                                    <tr>
+                                        <th>Shipment ID</th>
+                                        <th>Component</th>
+                                        <th>Supplier</th>
+                                        <th>Mode</th>
+                                        <th>Origin</th>
+                                        <th>Scheduled</th>
+                                        <th>Predicted Delay</th>
+                                        <th>Weather</th>
+                                        <th>Risk Tier</th>
+                                    </tr>
+                                </thead>
+                                <tbody></tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                    <!-- Shipment XAI Section -->
+                    <div class="card-section mt-4">
+                        <div class="filter-bar mb-3">
+                            <label for="shipment-selector" class="filter-label">Select Shipment for Root-Cause Analysis:</label>
+                            <select id="shipment-selector" class="form-select"></select>
+                        </div>
+                        <div id="chart-shipment-xai" class="chart-container"></div>
+                    </div>
+
+                    <div class="grid-2 mt-4">
+                        <div class="card-section">
+                            <h3 class="card-title">Scheduled vs Predicted Inbound Delay</h3>
+                            <div id="chart-shipment-delays" class="chart-container"></div>
+                        </div>
+                        <div class="card-section">
+                            <h3 class="card-title">Route Risk: Weather vs Geopolitical Exposure</h3>
+                            <div id="chart-route-risks" class="chart-container"></div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- 4. TAB: INVENTORY TRAJECTORIES -->
+                <section class="tab-pane" id="tab-inventory">
+                    <div class="filter-bar">
+                        <label for="inventory-selector" class="filter-label">Select Component to Forecast:</label>
+                        <select id="inventory-selector" class="form-select"></select>
+                    </div>
+
+                    <div class="kpi-grid mt-3">
+                        <div class="kpi-card">
+                            <div class="kpi-title">Current On-Hand Stock</div>
+                            <div class="kpi-value text-cyan" id="inv-current-stock">-- units</div>
+                            <div class="kpi-sub" id="inv-burn-rate">Burn rate: -- units/day</div>
+                        </div>
+                        <div class="kpi-card">
+                            <div class="kpi-title">Days of Supply</div>
+                            <div class="kpi-value text-emerald" id="inv-dos">-- days</div>
+                            <div class="kpi-sub">Before inventory reaches 0</div>
+                        </div>
+                        <div class="kpi-card">
+                            <div class="kpi-title">Safety Stock Threshold</div>
+                            <div class="kpi-value text-amber" id="inv-safety-stock">-- units</div>
+                            <div class="kpi-sub" id="inv-rop">Reorder point: -- units</div>
+                        </div>
+                        <div class="kpi-card">
+                            <div class="kpi-title">Projected Stockout Day</div>
+                            <div class="kpi-value text-rose" id="inv-stockout-day">None (Safe)</div>
+                            <div class="kpi-sub" id="inv-deficit">Cumulative deficit: 0</div>
+                        </div>
+                    </div>
+
+                    <div class="card-section mt-4">
+                        <h3 class="card-title">30-Day Forward Multi-Echelon Inventory Trajectory</h3>
+                        <p class="card-caption">Deterministic daily inventory burn with scheduled replenishment inflows and buffer thresholds.</p>
+                        <div id="chart-inventory-curve" class="chart-container-large"></div>
+                    </div>
+                </section>
+
+                <!-- 5. TAB: PRESCRIPTIVE DECISION OPTIMIZER -->
+                <section class="tab-pane" id="tab-prescriptive">
+                    <div class="bcg-banner">
+                        <h3 class="text-emerald">🎯 Prescriptive Operational Policy Optimizer</h3>
+                        <p>Mathematical decision engine optimizing dynamic safety stocks and capacity-constrained maintenance schedules to maximize avoided cost and unlock working capital.</p>
+                    </div>
+
+                    <div class="grid-2 mt-4">
+                        <!-- Inventory Optimization -->
+                        <div class="card-section">
+                            <h3 class="card-title">Dynamic Safety Stock & EOQ Optimizer</h3>
+                            <p class="card-caption">Solves the stockout risk vs holding capital carrying cost trade-off.</p>
+                            
+                            <div class="control-row mt-3">
+                                <label for="sl-slider" class="control-label">Target Cycle Service Level: <b id="sl-val" class="text-emerald">95%</b></label>
+                                <input type="range" id="sl-slider" min="90" max="99" value="95" step="1" class="range-slider">
+                            </div>
+
+                            <div class="kpi-grid mt-3">
+                                <div class="kpi-card">
+                                    <div class="kpi-title">Optimized Annual Holding Cost</div>
+                                    <div class="kpi-value text-cyan" id="opt-holding">$0</div>
+                                </div>
+                                <div class="kpi-card">
+                                    <div class="kpi-title">Working Capital Freed</div>
+                                    <div class="kpi-value text-emerald" id="opt-wc">$0</div>
+                                </div>
+                            </div>
+
+                            <div class="table-responsive mt-3">
+                                <table class="data-table" id="table-opt-inv">
+                                    <thead>
+                                        <tr>
+                                            <th>Component</th>
+                                            <th>Current SS</th>
+                                            <th>Optimal SS</th>
+                                            <th>Delta</th>
+                                            <th>Optimal EOQ</th>
+                                            <th>Capital Impact</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody></tbody>
+                                </table>
+                            </div>
+                        </div>
+
+                        <!-- Maintenance Scheduling -->
+                        <div class="card-section">
+                            <h3 class="card-title">Resource-Constrained Maintenance Dispatcher</h3>
+                            <p class="card-caption">Knapsack-style optimization maximizing avoided downtime losses within technician shift capacity.</p>
+
+                            <div class="control-row mt-3">
+                                <label for="tech-hours-slider" class="control-label">Technician Shift Capacity: <b id="tech-val" class="text-cyan">24 Hours</b></label>
+                                <input type="range" id="tech-hours-slider" min="8" max="48" value="24" step="4" class="range-slider">
+                            </div>
+
+                            <div class="kpi-grid mt-3">
+                                <div class="kpi-card">
+                                    <div class="kpi-title">Hours Allocated</div>
+                                    <div class="kpi-value text-cyan" id="sched-hours">0 / 24 hrs</div>
+                                </div>
+                                <div class="kpi-card">
+                                    <div class="kpi-title">Avoided Unplanned Losses</div>
+                                    <div class="kpi-value text-emerald" id="sched-avoided">$0</div>
+                                </div>
+                                <div class="kpi-card">
+                                    <div class="kpi-title">Maintenance ROI</div>
+                                    <div class="kpi-value text-emerald" id="sched-roi">0%</div>
+                                </div>
+                            </div>
+
+                            <div class="table-responsive mt-3">
+                                <table class="data-table" id="table-opt-sched">
+                                    <thead>
+                                        <tr>
+                                            <th>Machine</th>
+                                            <th>Bay</th>
+                                            <th>Risk</th>
+                                            <th>Tech Hrs</th>
+                                            <th>Avoided Loss</th>
+                                            <th>Net Value</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody></tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- 6. TAB: RESILIENCE MATRIX -->
+                <section class="tab-pane" id="tab-resilience">
+                    <div class="bcg-banner">
+                        <h3 class="text-emerald">🛡️ BCG Supply Chain Resilience Framework</h3>
+                        <p>Time-to-Survive (TTS) measures operating days before complete component starvation. Time-to-Recover (TTR) measures days to restore alternate supply. Nodes with <b>TTS &lt; TTR</b> represent structural crisis risks.</p>
+                    </div>
+
+                    <div class="card-section mt-4">
+                        <h3 class="card-title">Resilience Quadrant: Time-to-Survive (TTS) vs Time-to-Recover (TTR)</h3>
+                        <p class="card-caption">Points above the dashed parity line fall into the vulnerable disruption zone.</p>
+                        <div id="chart-resilience-matrix" class="chart-container-large"></div>
+                    </div>
+
+                    <div class="grid-2 mt-4">
+                        <div class="card-section">
+                            <h3 class="card-title">Component Resilience Audit Table</h3>
+                            <div class="table-responsive mt-3">
+                                <table class="data-table" id="table-resilience">
+                                    <thead>
+                                        <tr>
+                                            <th>Component</th>
+                                            <th>Supplier</th>
+                                            <th>TTS</th>
+                                            <th>TTR</th>
+                                            <th>Resilience Gap</th>
+                                            <th>Status</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody></tbody>
+                                </table>
+                            </div>
+                        </div>
+
+                        <div class="card-section">
+                            <h3 class="card-title">Supplier Sourcing Concentration (HHI)</h3>
+                            <p class="card-caption" id="hhi-caption">Herfindahl-Hirschman Index across annual procurement spend.</p>
+                            <div id="chart-supplier-hhi" class="chart-container"></div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- 7. TAB: WHAT-IF SIMULATOR -->
+                <section class="tab-pane" id="tab-simulator">
+                    <div class="subnav-tabs">
+                        <button class="subnav-btn active" data-subtab="sim-tab-1">Scenario 1: Shipping Delay</button>
+                        <button class="subnav-btn" data-subtab="sim-tab-2">Scenario 2: Machine Downtime</button>
+                        <button class="subnav-btn" data-subtab="sim-tab-3">Scenario 3: Supplier Disruption</button>
+                        <button class="subnav-btn" data-subtab="sim-tab-4">Scenario 4: Demand Surge</button>
+                        <button class="subnav-btn" data-subtab="sim-tab-5">Scenario 5: Multi-Vector Combined</button>
+                    </div>
+
+                    <!-- Sim 1: Shipping Delay -->
+                    <div class="sim-pane active" id="sim-tab-1">
+                        <div class="grid-2 mt-3">
+                            <div class="card-section">
+                                <h3 class="card-title">Scenario 1 Levers</h3>
+                                <div class="control-row mt-3">
+                                    <label for="sim1-comp" class="control-label">Target Component:</label>
+                                    <select id="sim1-comp" class="form-select"></select>
+                                </div>
+                                <div class="control-row mt-3">
+                                    <label for="sim1-delay" class="control-label">Additional Shipping Delay: <b id="sim1-delay-val" class="text-rose">+6 Days</b></label>
+                                    <input type="range" id="sim1-delay" min="0" max="30" value="6" step="1" class="range-slider">
+                                </div>
+                                <div class="kpi-grid mt-4">
+                                    <div class="kpi-card">
+                                        <div class="kpi-title">Simulated Arrival</div>
+                                        <div class="kpi-value text-cyan" id="sim1-arrival">Day --</div>
+                                    </div>
+                                    <div class="kpi-card">
+                                        <div class="kpi-title">Stockout Day</div>
+                                        <div class="kpi-value text-rose" id="sim1-stockout">Day --</div>
+                                    </div>
+                                    <div class="kpi-card">
+                                        <div class="kpi-title">Deficit Units</div>
+                                        <div class="kpi-value text-rose" id="sim1-deficit">--</div>
+                                    </div>
+                                </div>
+                                <div class="mt-4">
+                                    <h4 class="card-title">Mitigation Actions:</h4>
+                                    <ul id="sim1-actions" class="action-list"></ul>
+                                </div>
+                            </div>
+                            <div class="card-section">
+                                <h3 class="card-title">Simulated vs Baseline Trajectory</h3>
+                                <div id="chart-sim1-curve" class="chart-container"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Sim 2: Machine Downtime -->
+                    <div class="sim-pane" id="sim-tab-2">
+                        <div class="grid-2 mt-3">
+                            <div class="card-section">
+                                <h3 class="card-title">Scenario 2 Levers</h3>
+                                <div class="control-row mt-3">
+                                    <label for="sim2-machine" class="control-label">Target Machine:</label>
+                                    <select id="sim2-machine" class="form-select"></select>
+                                </div>
+                                <div class="control-row mt-3">
+                                    <label for="sim2-days" class="control-label">Unplanned Outage Duration: <b id="sim2-days-val" class="text-rose">3 Days</b></label>
+                                    <input type="range" id="sim2-days" min="1" max="14" value="3" step="1" class="range-slider">
+                                </div>
+                                <div class="kpi-grid mt-4">
+                                    <div class="kpi-card">
+                                        <div class="kpi-title">Lost Capacity</div>
+                                        <div class="kpi-value text-rose" id="sim2-capacity">-- units</div>
+                                    </div>
+                                    <div class="kpi-card">
+                                        <div class="kpi-title">Downtime Loss</div>
+                                        <div class="kpi-value text-rose" id="sim2-cost">$0</div>
+                                    </div>
+                                </div>
+                                <div class="mt-4">
+                                    <h4 class="card-title">Recovery Playbook:</h4>
+                                    <ul id="sim2-options" class="action-list"></ul>
+                                </div>
+                            </div>
+                            <div class="card-section">
+                                <h3 class="card-title">Lost Output & Backlog Impact</h3>
+                                <div id="chart-sim2-bar" class="chart-container"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Sim 3: Supplier Disruption -->
+                    <div class="sim-pane" id="sim-tab-3">
+                        <div class="grid-2 mt-3">
+                            <div class="card-section">
+                                <h3 class="card-title">Scenario 3 Levers</h3>
+                                <div class="control-row mt-3">
+                                    <label for="sim3-comp" class="control-label">Target Component:</label>
+                                    <select id="sim3-comp" class="form-select"></select>
+                                </div>
+                                <div class="control-row mt-3">
+                                    <label for="sim3-cut" class="control-label">Supply Quantity Reduction: <b id="sim3-cut-val" class="text-rose">50%</b></label>
+                                    <input type="range" id="sim3-cut" min="0" max="100" value="50" step="5" class="range-slider">
+                                </div>
+                                <div class="control-row mt-3">
+                                    <label for="sim3-delay" class="control-label">Prolonged Delay: <b id="sim3-delay-val" class="text-amber">8 Days</b></label>
+                                    <input type="range" id="sim3-delay" min="0" max="20" value="8" step="1" class="range-slider">
+                                </div>
+                                <div class="kpi-grid mt-4">
+                                    <div class="kpi-card">
+                                        <div class="kpi-title">Stockout Day</div>
+                                        <div class="kpi-value text-rose" id="sim3-stockout">Day --</div>
+                                    </div>
+                                    <div class="kpi-card">
+                                        <div class="kpi-title">Deficit Volume</div>
+                                        <div class="kpi-value text-rose" id="sim3-deficit">-- units</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="card-section">
+                                <h3 class="card-title">Disruption Stock Depletion Curve</h3>
+                                <div id="chart-sim3-curve" class="chart-container"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Sim 4: Demand Surge -->
+                    <div class="sim-pane" id="sim-tab-4">
+                        <div class="card-section mt-3">
+                            <h3 class="card-title">Scenario 4: Unexpected Demand Surge</h3>
+                            <div class="control-row mt-3" style="max-width: 480px;">
+                                <label for="sim4-surge" class="control-label">Demand Surge Percentage: <b id="sim4-surge-val" class="text-cyan">+30%</b></label>
+                                <input type="range" id="sim4-surge" min="-50" max="100" value="30" step="5" class="range-slider">
+                            </div>
+                            <div class="kpi-grid mt-4">
+                                <div class="kpi-card">
+                                    <div class="kpi-title">Components Suffering Stockout</div>
+                                    <div class="kpi-value text-rose" id="sim4-stockouts">-- / --</div>
+                                </div>
+                            </div>
+                            <div class="table-responsive mt-4">
+                                <table class="data-table" id="table-sim4">
+                                    <thead>
+                                        <tr>
+                                            <th>Component</th>
+                                            <th>New Daily Burn</th>
+                                            <th>Stockout Day</th>
+                                            <th>Days Earlier</th>
+                                            <th>Deficit Volume</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody></tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Sim 5: Combined Stress Test -->
+                    <div class="sim-pane" id="sim-tab-5">
+                        <div class="card-section mt-3">
+                            <h3 class="card-title">Scenario 5: Multi-Vector Combined Stress Test</h3>
+                            <p class="card-caption">Simulates concurrent shocks across shipping delays, machinery outages, demand spikes, and supplier quotas.</p>
+
+                            <div class="grid-4 mt-3">
+                                <div class="control-col">
+                                    <label for="sim5-ship" class="control-label">Ship Delay: <b id="sim5-ship-val" class="text-cyan">6d</b></label>
+                                    <input type="range" id="sim5-ship" min="0" max="20" value="6" class="range-slider">
+                                </div>
+                                <div class="control-col">
+                                    <label for="sim5-maint" class="control-label">Machine Down: <b id="sim5-maint-val" class="text-rose">3d</b></label>
+                                    <input type="range" id="sim5-maint" min="0" max="10" value="3" class="range-slider">
+                                </div>
+                                <div class="control-col">
+                                    <label for="sim5-demand" class="control-label">Demand Surge: <b id="sim5-demand-val" class="text-amber">+25%</b></label>
+                                    <input type="range" id="sim5-demand" min="-20" max="80" value="25" class="range-slider">
+                                </div>
+                                <div class="control-col">
+                                    <label for="sim5-sup" class="control-label">Supply Cut: <b id="sim5-sup-val" class="text-rose">20%</b></label>
+                                    <input type="range" id="sim5-sup" min="0" max="80" value="20" class="range-slider">
+                                </div>
+                            </div>
+
+                            <div class="kpi-grid mt-4">
+                                <div class="kpi-card">
+                                    <div class="kpi-title">Stockout Components</div>
+                                    <div class="kpi-value text-rose" id="sim5-stockouts">--</div>
+                                </div>
+                                <div class="kpi-card">
+                                    <div class="kpi-title">Total Deficit Volume</div>
+                                    <div class="kpi-value text-rose" id="sim5-deficit">-- units</div>
+                                </div>
+                                <div class="kpi-card">
+                                    <div class="kpi-title">Lost Production Capacity</div>
+                                    <div class="kpi-value text-rose" id="sim5-lost-prod">-- units</div>
+                                </div>
+                                <div class="kpi-card">
+                                    <div class="kpi-title">Total Combined Exposure</div>
+                                    <div class="kpi-value text-rose" id="sim5-exposure">$0</div>
+                                </div>
+                            </div>
+
+                            <div id="chart-sim5-comparison" class="chart-container-large mt-4"></div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- 8. TAB: BOARDROOM EXECUTIVE BRIEFING -->
+                <section class="tab-pane" id="tab-memo">
+                    <div class="bcg-banner flex-between">
+                        <div>
+                            <h3 class="text-emerald">📄 Boardroom Executive Briefing Memo</h3>
+                            <p>Strategic transformation memo generated from the digital twin state, formatted for C-Suite and Board Review.</p>
+                        </div>
+                        <button class="btn btn-primary" id="btn-download-memo">
+                            <span>📥 Download Memo (.md)</span>
+                        </button>
+                    </div>
+
+                    <div class="card-section mt-4 memo-container" id="memo-content">
+                        Loading executive briefing...
+                    </div>
+
+                    <div class="card-section mt-4">
+                        <h3 class="card-title">Data-Driven Tactical Mitigation Playbook</h3>
+                        <p class="card-caption">Actionable interventions prioritized by financial impact.</p>
+                        <div id="playbook-list" class="mt-3"></div>
+                    </div>
+                </section>
+
+            </div>
+        </main>
+    </div>
+
+    <!-- App JavaScript -->
+    <script src="/static/app.js"></script>
+</body>
+</html>
