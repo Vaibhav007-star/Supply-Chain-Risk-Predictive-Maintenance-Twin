@@ -8,7 +8,6 @@ Provides mathematical decision optimization:
 from typing import Dict, Any, List
 import numpy as np
 import pandas as pd
-from scipy.stats import norm
 
 
 class PrescriptiveOptimizer:

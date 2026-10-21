@@ -1,0 +1,22 @@
+# Virtual environment & caches
+.venv/
+env/
+venv/
+__pycache__/
+*.py[cod]
+.pytest_cache/
+
+# Testing & local dev files
+tests/
+writing-block.md
+requirements-dev.txt
+
+# Raw and bulky offline datasets not needed at runtime
+data/raw/
+data/processed/*.parquet
+
+# Local logs & git
+.git/
+*.log
+.DS_Store
+Thumbs.db
