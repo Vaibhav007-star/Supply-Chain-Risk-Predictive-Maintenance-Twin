@@ -53,7 +53,8 @@ def clean_for_json(obj: Any) -> Any:
 app = FastAPI(
     title="BCG X Supply Chain & Predictive Maintenance Digital Twin API",
     version="2.0.0",
-    description="Enterprise Decision Intelligence and Digital Twin Platform"
+    description="Enterprise Decision Intelligence and Digital Twin Platform",
+    redirect_slashes=False
 )
 
 # Enable CORS
