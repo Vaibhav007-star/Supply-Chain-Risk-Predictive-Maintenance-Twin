@@ -1,5 +1,11 @@
 # Supply Chain Risk & Predictive Maintenance Twin (BCG X Edition)
 
+[![Live Demo](https://img.shields.io/badge/Live_Demo-Vercel-000000?style=for-the-badge&logo=vercel&logoColor=white)](https://supply-chain-risk-predictive-mainte.vercel.app)
+[![API Status](https://img.shields.io/badge/API-Active%20%26%20Healthy-059669?style=for-the-badge&logo=fastapi&logoColor=white)](https://supply-chain-risk-predictive-mainte.vercel.app/api/health)
+[![Python 3.12](https://img.shields.io/badge/Python-3.12-3776AB?style=for-the-badge&logo=python&logoColor=white)](https://python.org)
+
+> 🌐 **Live Web Application**: [https://supply-chain-risk-predictive-mainte.vercel.app](https://supply-chain-risk-predictive-mainte.vercel.app)
+
 An enterprise-grade AI decision-support twin and executive prescriptive command cockpit built for advanced manufacturing and global supply chains.
 
 The platform bridges shopfloor machine telemetry, inbound shipping delay risks, and dynamic inventory trajectories with **BCG X-standard Value-at-Risk (VaR) modeling, Explainable AI (XAI) root-cause attribution, prescriptive policy optimization, and network resilience frameworks (TTS vs TTR)**.
